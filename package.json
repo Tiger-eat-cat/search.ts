@@ -1,5 +1,5 @@
 {
-  "name": "search.js",
+  "name": "search.ts",
   "version": "0.1.0-beta",
   "description": "Searches for the target string in the string",
   "main": "index.ts",
