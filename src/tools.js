@@ -37,11 +37,11 @@ var findFromTopNode = function (contents, tree, position, searchResult) {
         var char = contents[cursor];
         var nodeChildren = node.children;
         if (nodeChildren.has(char)) {
-            var target = nodeChildren.get(char);
-            if (target.isEnd) {
+            node = nodeChildren.get(char);
+            // @ts-ignore
+            if (node.isEnd) {
                 searchResult.push(createMatchInfo(node.str, position, cursor));
             }
-            node = target;
         }
         else {
             break;

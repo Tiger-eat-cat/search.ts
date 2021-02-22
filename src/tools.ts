@@ -35,11 +35,11 @@ export const findFromTopNode = (contents: string[], tree: SearchWordTree, positi
         const char: string = contents[cursor]
         const nodeChildren: Map<string, WordNode> = node.children
         if (nodeChildren.has(char)) {
-            const target = nodeChildren.get(char) as WordNode
-            if (target.isEnd) {
-                searchResult.push(createMatchInfo(target.str, position, cursor))
+            node = nodeChildren.get(char) as WordNode
+            // @ts-ignore
+            if (node.isEnd) {
+                searchResult.push(createMatchInfo(node.str, position, cursor))
             }
-            node = target
         } else {
             break
         }
