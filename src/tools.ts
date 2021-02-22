@@ -37,7 +37,7 @@ export const findFromTopNode = (contents: string[], tree: SearchWordTree, positi
         if (nodeChildren.has(char)) {
             const target = nodeChildren.get(char) as WordNode
             if (target.isEnd) {
-                searchResult.push(createMatchInfo(node.str, position, cursor))
+                searchResult.push(createMatchInfo(target.str, position, cursor))
             }
             node = target
         } else {
