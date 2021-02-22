@@ -7,8 +7,7 @@ npm install search.ts
 
 import { buildSearch } from 'search.ts'
 
-const artile = 'She is a so beautiful girl.'
+const article = 'She is a so beautiful girl.'
 const searcher = buildSearch(['She', 'he', 'girl', 'beautiful'])
-console.log(searcher.search(artile1))
-
+console.log(searcher.search(article))
 ```
