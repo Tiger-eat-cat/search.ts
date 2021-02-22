@@ -1,0 +1,28 @@
+{
+  "name": "search.js",
+  "version": "0.1.0-beta.1",
+  "description": "Searches for the target string in the string",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tiger-eat-cat/search.js.git"
+  },
+  "keywords": [
+    "search",
+    "searchjs",
+    "search-js",
+    "search.js",
+    "ac",
+    "text-search",
+    "search-text"
+  ],
+  "author": "Tiger-eat-cat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tiger-eat-cat/search.js/issues"
+  },
+  "homepage": "https://github.com/Tiger-eat-cat/search.js#readme"
+}
