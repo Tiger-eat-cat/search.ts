@@ -20,7 +20,7 @@ console.log(searcher.search(article))
 * ]
 */
 // when you want to search single word
-const kmpSearcher = buildSearch(She)
+const kmpSearcher = buildSearch('She')
 console.log(searcher.search(article))
 /*
 * [
