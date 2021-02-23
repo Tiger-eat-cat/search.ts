@@ -11,9 +11,9 @@ export interface SearchWordTree {
 }
 
 export interface SearchResult {
-    word: string,
+    word?: string,
     start: number,
-    end: number,
+    end?: number,
 }
 
 export interface Search {
