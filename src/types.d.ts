@@ -9,9 +9,9 @@ export interface SearchWordTree {
     children: Map<string, WordNode>;
 }
 export interface SearchResult {
-    word: string;
+    word?: string;
     start: number;
-    end: number;
+    end?: number;
 }
 export interface Search {
     search(content: string): SearchResult[];

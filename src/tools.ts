@@ -45,3 +45,42 @@ export const findFromTopNode = (contents: string[], tree: SearchWordTree, positi
         }
     }
 }
+
+
+export const createLongPrefix = (str: string): string[] => {
+    const prefixCollection: string[] = []
+    const length: number = str.length
+    if (length === 1) {
+        return prefixCollection
+    }
+    for (let i = 0; i < length - 1; i++) {
+        prefixCollection.push(str.slice(0, i + 1))
+    }
+    return prefixCollection
+}
+
+export const createLongSuffix = (str: string): string[] => {
+    const suffixCollection: string[] = []
+    const length: number = str.length
+    if (length === 1) {
+        return suffixCollection
+    }
+    for (let i = length - 1; i > 0; i--) {
+        suffixCollection.unshift(str.slice(i, length))
+    }
+    return suffixCollection
+}
+
+export const intersectionLength = (arg1: string[], arg2: string[]): number => {
+    let result = ''
+    const arrayMap: Map<string, string> = new Map()
+    arg1.forEach(item => arrayMap.set(item, item))
+    for (let i = 0; i < arg2.length; i++) {
+        const item = arg2[i]
+        if (arrayMap.has(item)) {
+            result = item
+            break
+        }
+    }
+    return result.length
+}

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findFromTopNode = exports.buildSearchTree = void 0;
+exports.intersectionLength = exports.createLongSuffix = exports.createLongPrefix = exports.findFromTopNode = exports.buildSearchTree = void 0;
 var buildSearchTree = function (searchArray) {
     var tree = {
         children: new Map(),
@@ -49,3 +49,41 @@ var findFromTopNode = function (contents, tree, position, searchResult) {
     }
 };
 exports.findFromTopNode = findFromTopNode;
+var createLongPrefix = function (str) {
+    var prefixCollection = [];
+    var length = str.length;
+    if (length === 1) {
+        return prefixCollection;
+    }
+    for (var i = 0; i < length - 1; i++) {
+        prefixCollection.push(str.slice(0, i + 1));
+    }
+    return prefixCollection;
+};
+exports.createLongPrefix = createLongPrefix;
+var createLongSuffix = function (str) {
+    var suffixCollection = [];
+    var length = str.length;
+    if (length === 1) {
+        return suffixCollection;
+    }
+    for (var i = length - 1; i > 0; i--) {
+        suffixCollection.unshift(str.slice(i, length));
+    }
+    return suffixCollection;
+};
+exports.createLongSuffix = createLongSuffix;
+var intersectionLength = function (arg1, arg2) {
+    var result = '';
+    var arrayMap = new Map();
+    arg1.forEach(function (item) { return arrayMap.set(item, item); });
+    for (var i = 0; i < arg2.length; i++) {
+        var item = arg2[i];
+        if (arrayMap.has(item)) {
+            result = item;
+            break;
+        }
+    }
+    return result.length;
+};
+exports.intersectionLength = intersectionLength;
