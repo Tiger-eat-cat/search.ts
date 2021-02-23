@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Tiger-eat-cat/search.js"
+    "url": "git+https://github.com/Tiger-eat-cat/search.ts"
   },
   "keywords": [
     "search",
@@ -17,12 +17,15 @@
     "search.js",
     "ac",
     "text-search",
-    "search-text"
+    "search-text",
+    "search.ts",
+    "searchts",
+    "kmp"
   ],
   "author": "Tiger-eat-cat",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Tiger-eat-cat/search.js/issues"
+    "url": "https://github.com/Tiger-eat-cat/search.ts/issues"
   },
-  "homepage": "https://github.com/Tiger-eat-cat/search.js#readme"
+  "homepage": "https://github.com/Tiger-eat-cat/search.ts#readme"
 }
