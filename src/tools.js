@@ -79,9 +79,8 @@ var intersectionLength = function (arg1, arg2) {
     arg1.forEach(function (item) { return arrayMap.set(item, item); });
     for (var i = 0; i < arg2.length; i++) {
         var item = arg2[i];
-        if (arrayMap.has(item)) {
+        if (arrayMap.has(item) && item.length > result.length) {
             result = item;
-            break;
         }
     }
     return result.length;
