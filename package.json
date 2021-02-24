@@ -1,32 +1,39 @@
 {
-  "name": "search.ts",
-  "version": "1.1.4",
-  "description": "Searches for the target string in the string",
-  "main": "index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Tiger-eat-cat/search.ts"
-  },
-  "keywords": [
-    "search",
-    "searchjs",
-    "search-js",
-    "search.js",
-    "ac",
-    "text-search",
-    "search-text",
-    "search-ts",
-    "search.ts",
-    "searchts",
-    "kmp"
-  ],
-  "author": "Tiger-eat-cat",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Tiger-eat-cat/search.ts/issues"
-  },
-  "homepage": "https://github.com/Tiger-eat-cat/search.ts#readme"
+    "name": "search.ts",
+    "version": "1.1.5",
+    "description": "Searches for the target string in the string",
+    "main": "index.ts",
+    "scripts": {
+        "test": "jest"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Tiger-eat-cat/search.ts"
+    },
+    "keywords": [
+        "search",
+        "searchjs",
+        "search-js",
+        "search.js",
+        "ac",
+        "text-search",
+        "search-text",
+        "search-ts",
+        "search.ts",
+        "searchts",
+        "kmp"
+    ],
+    "author": "Tiger-eat-cat",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Tiger-eat-cat/search.ts/issues"
+    },
+    "homepage": "https://github.com/Tiger-eat-cat/search.ts#readme",
+    "devDependencies": {
+        "@babel/preset-env": "^7.13.5",
+        "@types/jest": "^26.0.20",
+        "babel-jest": "^26.6.3",
+        "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+        "jest": "^26.4.2"
+    }
 }
