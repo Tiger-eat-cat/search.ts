@@ -77,9 +77,8 @@ export const intersectionLength = (arg1: string[], arg2: string[]): number => {
     arg1.forEach(item => arrayMap.set(item, item))
     for (let i = 0; i < arg2.length; i++) {
         const item = arg2[i]
-        if (arrayMap.has(item)) {
+        if (arrayMap.has(item) && item.length > result.length) {
             result = item
-            break
         }
     }
     return result.length
