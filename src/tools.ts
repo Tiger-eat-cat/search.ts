@@ -1,4 +1,4 @@
-import { SearchWordTree, WordNode, SearchResult } from './types'
+import { SearchWordTree, WordNode, SearchResult, Formatter } from './types'
 
 export const buildSearchTree = (searchArray: string[]): SearchWordTree => {
     const tree: SearchWordTree = {
@@ -28,7 +28,7 @@ export const buildSearchTree = (searchArray: string[]): SearchWordTree => {
     return tree
 }
 
-export const findFromTopNode = (contents: string[], tree: SearchWordTree, position: number, searchResult: SearchResult[]): void => {
+export const findFromTopNode = (contents: string[], tree: SearchWordTree, position: number, searchResult: SearchResult[], formatter?: Formatter): void => {
     const createMatchInfo = (word: string, start: number, end: number): SearchResult => ({ word, start, end })
     let node: WordNode | SearchWordTree = tree
     for (let cursor = position; cursor < contents.length; cursor++) {
@@ -38,7 +38,11 @@ export const findFromTopNode = (contents: string[], tree: SearchWordTree, positi
             node = nodeChildren.get(char) as WordNode
             // @ts-ignore
             if (node.isEnd) {
-                searchResult.push(createMatchInfo(node.str, position, cursor))
+                if (formatter) {
+                    formatter(searchResult, node.str, position, cursor)
+                } else {
+                    searchResult.push(createMatchInfo(node.str, position, cursor))
+                }
             }
         } else {
             break

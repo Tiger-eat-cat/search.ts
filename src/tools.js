@@ -30,7 +30,7 @@ var buildSearchTree = function (searchArray) {
     return tree;
 };
 exports.buildSearchTree = buildSearchTree;
-var findFromTopNode = function (contents, tree, position, searchResult) {
+var findFromTopNode = function (contents, tree, position, searchResult, formatter) {
     var createMatchInfo = function (word, start, end) { return ({ word: word, start: start, end: end }); };
     var node = tree;
     for (var cursor = position; cursor < contents.length; cursor++) {
@@ -40,7 +40,12 @@ var findFromTopNode = function (contents, tree, position, searchResult) {
             node = nodeChildren.get(char);
             // @ts-ignore
             if (node.isEnd) {
-                searchResult.push(createMatchInfo(node.str, position, cursor));
+                if (formatter) {
+                    formatter(searchResult, node.str, position, cursor);
+                }
+                else {
+                    searchResult.push(createMatchInfo(node.str, position, cursor));
+                }
             }
         }
         else {
