@@ -1,6 +1,6 @@
 import { SearchTreeNode, SearchResult, Formatter } from './types'
 
-const buildFailPointer = (searchWordTree: SearchTreeNode) => {
+/*const buildFailPointer = (searchWordTree: SearchTreeNode): void => {
     const queue: SearchTreeNode[] = []
     queue.push(...searchWordTree.children.values())
     while (queue.length !== 0) {
@@ -20,7 +20,7 @@ const buildFailPointer = (searchWordTree: SearchTreeNode) => {
             }
         }
     }
-}
+}*/
 
 export const buildSearchTree = (searchArray: string[]): SearchTreeNode => {
     const tree: SearchTreeNode = {
@@ -48,7 +48,7 @@ export const buildSearchTree = (searchArray: string[]): SearchTreeNode => {
             }
         })
     })
-    buildFailPointer(tree)
+    // buildFailPointer(tree)
     return tree
 }
 
