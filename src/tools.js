@@ -72,7 +72,7 @@ var findFromTopNode = function (contents, tree, position, searchResult, formatte
             }
         }
         else {
-            node = node.failPointer;
+            // node = node.failPointer as SearchTreeNode
             break;
         }
     }

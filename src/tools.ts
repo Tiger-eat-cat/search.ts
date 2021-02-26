@@ -69,7 +69,7 @@ export const findFromTopNode = (contents: string[], tree: SearchTreeNode, positi
                 }
             }
         } else {
-            node = node.failPointer as SearchTreeNode
+            // node = node.failPointer as SearchTreeNode
             break
         }
     }
