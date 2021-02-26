@@ -31,12 +31,12 @@ console.log(searcher.search(article))
 # Document
 ### API
 - **buildSearch**
-   - buildSearch(searchStr: string | string[]): Search (it will build a match-words-tree and returns an object with search func.)
+   - buildSearch(searchStr: string | string[]): **Search** (it will build a match-words-tree and returns an object with search func.)
       - searchStr: The string what you want to find. Can be single word or word array.
       - Search: An object with search function.
 
 - **search** 
-   - search(content: string, formatter?: Formatter): SearchResult []
+   - search(content: string, formatter?: **Formatter**): **SearchResult** []
       - content: The original string.
       - formatter: The custom function. Please refer to the documentation for details.
       - SearchResult: The search result array. You can pass function 'formatter' to change its structure.
