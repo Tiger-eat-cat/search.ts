@@ -23,17 +23,21 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.intersectionLength = exports.createLongSuffix = exports.createLongPrefix = exports.findFromTopNode = exports.buildSearchTree = void 0;
 var buildFailPointer = function (searchWordTree) {
-    var _a, _b;
+    var _a;
     var queue = [];
     queue.push.apply(queue, __spreadArray([], __read(searchWordTree.children.values())));
     while (queue.length !== 0) {
         var node = queue.shift();
         var nodeName = node.name;
-        if (((_a = node.name) === null || _a === void 0 ? void 0 : _a.length) === 1) {
+        var nodeStr = node.str;
+        if (!node.isEnd) {
+            queue.push.apply(queue, __spreadArray([], __read(node.children.values())));
+        }
+        if ((nodeStr === null || nodeStr === void 0 ? void 0 : nodeStr.length) === 1) {
             node.failPointer = searchWordTree;
         }
         else {
-            var parentNodeFailPointer = (_b = node.parent) === null || _b === void 0 ? void 0 : _b.failPointer;
+            var parentNodeFailPointer = (_a = node.parent) === null || _a === void 0 ? void 0 : _a.failPointer;
             var parentNodeFailPointerChildren = parentNodeFailPointer === null || parentNodeFailPointer === void 0 ? void 0 : parentNodeFailPointer.children;
             if (parentNodeFailPointerChildren.has(nodeName)) {
                 node.failPointer = parentNodeFailPointerChildren.get(nodeName);

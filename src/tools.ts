@@ -6,7 +6,11 @@ const buildFailPointer = (searchWordTree: SearchTreeNode) => {
     while (queue.length !== 0) {
         const node = queue.shift() as SearchTreeNode
         const nodeName = node.name as string
-        if (node.name?.length === 1) {
+        const nodeStr = node.str as string
+        if (!node.isEnd) {
+            queue.push(...node.children.values())
+        }
+        if (nodeStr?.length === 1) {
             node.failPointer = searchWordTree
         } else {
             const parentNodeFailPointer = node.parent?.failPointer
@@ -47,7 +51,6 @@ export const buildSearchTree = (searchArray: string[]): SearchTreeNode => {
         })
     })
     buildFailPointer(tree)
-    console.log('============================>', tree)
     return tree
 }
 

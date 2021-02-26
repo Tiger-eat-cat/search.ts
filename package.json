@@ -1,6 +1,6 @@
 {
     "name": "search.ts",
-    "version": "1.2.3-beta.1",
+    "version": "1.2.3-beta.2",
     "description": "Searches for the target string in the string",
     "main": "index.ts",
     "scripts": {
