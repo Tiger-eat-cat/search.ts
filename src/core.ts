@@ -1,15 +1,15 @@
 import { buildSearchTree, createLongPrefix, createLongSuffix, findFromTopNode, intersectionLength } from './tools'
-import { SearchResult, Search } from './types'
+import { SearchResult, Search, Formatter } from './types'
 
 export const buildSearch = (search: string[] | string): Search => {
     if (search instanceof Array) {
         const searchTree = buildSearchTree(search)
         return {
-            search: (content: string): SearchResult[] => {
+            search: (content: string, formatter?: Formatter): SearchResult[] => {
                 const searchResult: SearchResult[] = []
                 const contentList = content.split('')
                 contentList.forEach((char, index) => {
-                    findFromTopNode(contentList, searchTree, index, searchResult)
+                    findFromTopNode(contentList, searchTree, index, searchResult, formatter)
                 })
                 return searchResult
             }
@@ -26,7 +26,7 @@ export const buildKMPSearch = (search: string): Search => {
         partMatchTable.set(i, intersectionLength(createLongSuffix(str), createLongPrefix(str)))
     }
     return {
-        search: (content: string): SearchResult[] => {
+        search: (content: string, formatter?: Formatter): SearchResult[] => {
             // debugger
             const contentLength = content.length
             const matchLength = search.length
@@ -46,7 +46,11 @@ export const buildKMPSearch = (search: string): Search => {
                     }
                 } else {
                     if (j === matchLength - 1) { // 如果匹配到匹配字符串最后一位，说明成功匹配到一次，重置匹配字符串索引至开始位置，继续向下文本字符串索引
-                        result.push({ start: i - (matchLength - 1), end: i })
+                        if (formatter) {
+                            formatter(result, content, i - (matchLength - 1), i)
+                        } else {
+                            result.push({ start: i - (matchLength - 1), end: i })
+                        }
                         i++
                         j = 0
                     } else {

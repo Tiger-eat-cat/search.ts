@@ -13,6 +13,7 @@ export interface SearchResult {
     start: number;
     end?: number;
 }
+export declare type Formatter = (result: SearchResult[], word: string, start: number, end: number) => void;
 export interface Search {
-    search(content: string): SearchResult[];
+    search(content: string, formatter?: Formatter): SearchResult[];
 }
