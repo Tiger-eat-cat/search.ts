@@ -1,16 +1,38 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.intersectionLength = exports.createLongSuffix = exports.createLongPrefix = exports.findFromTopNode = exports.buildSearchTree = void 0;
+/*const buildFailPointer = (searchWordTree: SearchTreeNode): void => {
+    const queue: SearchTreeNode[] = []
+    queue.push(...searchWordTree.children.values())
+    while (queue.length !== 0) {
+        const node = queue.shift() as SearchTreeNode
+        const nodeName = node.name as string
+        const nodeStr = node.str as string
+        queue.push(...node.children.values())
+        if (nodeStr?.length === 1) {
+            node.failPointer = searchWordTree
+        } else {
+            const parentNodeFailPointer = node.parent?.failPointer
+            const parentNodeFailPointerChildren = parentNodeFailPointer?.children as Map<string, SearchTreeNode>
+            if (parentNodeFailPointerChildren.has(nodeName)) {
+                node.failPointer = parentNodeFailPointerChildren.get(nodeName)
+            } else {
+                node.failPointer = parentNodeFailPointer
+            }
+        }
+    }
+}*/
 var buildSearchTree = function (searchArray) {
     var tree = {
         children: new Map(),
         str: '',
     };
-    var createNode = function (isEnd, name, prefix) { return ({
+    var createNode = function (isEnd, name, prefix, parent) { return ({
         children: new Map(),
         name: name,
         str: prefix + name,
         isEnd: isEnd,
+        parent: parent,
     }); };
     searchArray.forEach(function (word) {
         var charList = word.split('');
@@ -21,12 +43,13 @@ var buildSearchTree = function (searchArray) {
             }
             else {
                 var isEnd = index === word.length - 1;
-                var newNode = createNode(isEnd, char, node.str);
+                var newNode = createNode(isEnd, char, node.str, node);
                 node.children.set(char, newNode);
                 node = node.children.get(char);
             }
         });
     });
+    // buildFailPointer(tree)
     return tree;
 };
 exports.buildSearchTree = buildSearchTree;
@@ -49,6 +72,7 @@ var findFromTopNode = function (contents, tree, position, searchResult, formatte
             }
         }
         else {
+            // node = node.failPointer as SearchTreeNode
             break;
         }
     }

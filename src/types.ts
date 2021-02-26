@@ -1,13 +1,15 @@
-export interface WordNode {
-    isEnd: boolean,
-    name: string,
-    children: Map<string, WordNode>,
+export interface SearchTreeNode {
+    isEnd?: boolean,
+    name?: string,
+    children: Map<string, SearchTreeNode>,
     str: string,
+    failPointer?: SearchTreeNode,
+    parent?: SearchTreeNode
 }
 
 export interface SearchWordTree {
     str: string,
-    children: Map<string, WordNode>
+    children: Map<string, SearchTreeNode>
 }
 
 export interface SearchResult {

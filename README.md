@@ -1,5 +1,6 @@
 # search.ts
-Searches for the target string in the string
+Searches for the target string in the string.
+Using the Aho-Corasick automaton(with not fail pointer) and KMP.
 
 # How To Use
 ```
