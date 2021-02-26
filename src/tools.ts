@@ -1,41 +1,64 @@
-import { SearchWordTree, WordNode, SearchResult, Formatter } from './types'
+import { SearchTreeNode, SearchResult, Formatter } from './types'
 
-export const buildSearchTree = (searchArray: string[]): SearchWordTree => {
-    const tree: SearchWordTree = {
+const buildFailPointer = (searchWordTree: SearchTreeNode) => {
+    const queue: SearchTreeNode[] = []
+    queue.push(...searchWordTree.children.values())
+    while (queue.length !== 0) {
+        const node = queue.shift() as SearchTreeNode
+        const nodeName = node.name as string
+        if (node.name?.length === 1) {
+            node.failPointer = searchWordTree
+        } else {
+            const parentNodeFailPointer = node.parent?.failPointer
+            const parentNodeFailPointerChildren = parentNodeFailPointer?.children as Map<string, SearchTreeNode>
+            if (parentNodeFailPointerChildren.has(nodeName)) {
+                node.failPointer = parentNodeFailPointerChildren.get(nodeName)
+            } else {
+                node.failPointer = parentNodeFailPointer
+            }
+        }
+    }
+}
+
+export const buildSearchTree = (searchArray: string[]): SearchTreeNode => {
+    const tree: SearchTreeNode = {
         children: new Map(),
         str: '',
     }
-    const createNode = (isEnd: boolean, name: string, prefix: string): WordNode => ({
+    const createNode = (isEnd: boolean, name: string, prefix: string, parent: SearchTreeNode): SearchTreeNode => ({
         children: new Map(),
         name,
         str: prefix + name,
         isEnd,
+        parent,
     })
     searchArray.forEach(word => {
         const charList: string[] = word.split('')
-        let node: SearchWordTree | WordNode = tree
+        let node: SearchTreeNode = tree
         charList.forEach((char, index) => {
             if (node.children.has(char)) {
-                node = node.children.get(char) as WordNode
+                node = node.children.get(char) as SearchTreeNode
             } else {
                 const isEnd: boolean = index === word.length - 1
-                const newNode: WordNode = createNode(isEnd, char, node.str)
+                const newNode: SearchTreeNode = createNode(isEnd, char, node.str, node)
                 node.children.set(char, newNode)
-                node = node.children.get(char) as WordNode
+                node = node.children.get(char) as SearchTreeNode
             }
         })
     })
+    buildFailPointer(tree)
+    console.log('============================>', tree)
     return tree
 }
 
-export const findFromTopNode = (contents: string[], tree: SearchWordTree, position: number, searchResult: SearchResult[], formatter?: Formatter): void => {
+export const findFromTopNode = (contents: string[], tree: SearchTreeNode, position: number, searchResult: SearchResult[], formatter?: Formatter): void => {
     const createMatchInfo = (word: string, start: number, end: number): SearchResult => ({ word, start, end })
-    let node: WordNode | SearchWordTree = tree
+    let node: SearchTreeNode = tree
     for (let cursor = position; cursor < contents.length; cursor++) {
         const char: string = contents[cursor]
-        const nodeChildren: Map<string, WordNode> = node.children
+        const nodeChildren: Map<string, SearchTreeNode> = node.children
         if (nodeChildren.has(char)) {
-            node = nodeChildren.get(char) as WordNode
+            node = nodeChildren.get(char) as SearchTreeNode
             // @ts-ignore
             if (node.isEnd) {
                 if (formatter) {
@@ -45,6 +68,7 @@ export const findFromTopNode = (contents: string[], tree: SearchWordTree, positi
                 }
             }
         } else {
+            node = node.failPointer as SearchTreeNode
             break
         }
     }
