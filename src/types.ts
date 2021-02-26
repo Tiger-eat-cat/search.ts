@@ -12,7 +12,7 @@ export interface SearchWordTree {
 
 export interface SearchResult {
     word?: string,
-    start: number,
+    start?: number,
     end?: number,
 }
 
