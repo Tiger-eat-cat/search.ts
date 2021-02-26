@@ -30,9 +30,7 @@ var buildFailPointer = function (searchWordTree) {
         var node = queue.shift();
         var nodeName = node.name;
         var nodeStr = node.str;
-        if (!node.isEnd) {
-            queue.push.apply(queue, __spreadArray([], __read(node.children.values())));
-        }
+        queue.push.apply(queue, __spreadArray([], __read(node.children.values())));
         if ((nodeStr === null || nodeStr === void 0 ? void 0 : nodeStr.length) === 1) {
             node.failPointer = searchWordTree;
         }

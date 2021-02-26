@@ -7,9 +7,7 @@ const buildFailPointer = (searchWordTree: SearchTreeNode) => {
         const node = queue.shift() as SearchTreeNode
         const nodeName = node.name as string
         const nodeStr = node.str as string
-        if (!node.isEnd) {
-            queue.push(...node.children.values())
-        }
+        queue.push(...node.children.values())
         if (nodeStr?.length === 1) {
             node.failPointer = searchWordTree
         } else {
