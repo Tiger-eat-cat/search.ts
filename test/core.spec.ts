@@ -11,12 +11,12 @@ describe('build search test', () => {
     })
     it('test formatter func', () => {
         const formatter: Formatter = (result, word, start, end) => {
-            result.push({ word, start, end })
+            result.push({ name: word })
         }
         const formatter2: Formatter = (result, word, start, end) => {
-            result.push({ start, end })
+            result.push({ start, end, name: word })
         }
-        expect(buildSearch(['abc', 'bac']).search(content, formatter)).toEqual(expectResult)
-        expect(buildSearch('abc').search(content, formatter2)).toEqual([{ start: 0, end: 2 }])
+        expect(buildSearch(['abc', 'bac']).search(content, formatter)).toEqual([ { name: 'abc' }, { name: 'bac' } ])
+        expect(buildSearch('abc').search(content, formatter2)).toEqual([{ start: 0, end: 2, name: 'abc' }])
     })
 })

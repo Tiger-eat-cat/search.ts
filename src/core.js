@@ -22,10 +22,10 @@ var buildSearch = function (search) {
 };
 exports.buildSearch = buildSearch;
 var buildKMPSearch = function (search) {
-    var partMatchTable = new Map(); // pmt
+    var partialMatchTable = new Map(); // pmt
     for (var i = 0; i < search.length; i++) {
         var str = search.slice(0, i + 1);
-        partMatchTable.set(i, tools_1.intersectionLength(tools_1.createLongSuffix(str), tools_1.createLongPrefix(str)));
+        partialMatchTable.set(i, tools_1.intersectionLength(tools_1.createLongSuffix(str), tools_1.createLongPrefix(str)));
     }
     return {
         search: function (content, formatter) {
@@ -37,7 +37,7 @@ var buildKMPSearch = function (search) {
             var j = 0;
             var calculateMatchIndex = function (currentIndex) {
                 // debugger
-                j = j - (currentIndex - partMatchTable.get(currentIndex - 1));
+                j = j - (currentIndex - partialMatchTable.get(currentIndex - 1));
             };
             while (i < contentLength) {
                 if (content[i] !== search[j]) { // 如果当前不匹配
@@ -51,7 +51,7 @@ var buildKMPSearch = function (search) {
                 else {
                     if (j === matchLength - 1) { // 如果匹配到匹配字符串最后一位，说明成功匹配到一次，重置匹配字符串索引至开始位置，继续向下文本字符串索引
                         if (formatter) {
-                            formatter(result, content, i - (matchLength - 1), i);
+                            formatter(result, search, i - (matchLength - 1), i);
                         }
                         else {
                             result.push({ start: i - (matchLength - 1), end: i });
