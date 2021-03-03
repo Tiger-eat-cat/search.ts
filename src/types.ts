@@ -16,5 +16,5 @@ export interface SearchResult {
 export type Formatter = (result: unknown[], word: string, start: number, end: number) => void
 
 export interface Search {
-    search(content: string, formatter?: Formatter): unknown[]
+    search(content: string, formatter?: Formatter): unknown[] | SearchResult[]
 }
