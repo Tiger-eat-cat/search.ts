@@ -1,6 +1,7 @@
 # search.ts
 Searches for the target string in the string.
-Using the Aho-Corasick automaton(with not fail pointer) and KMP.
+It builds a search-words-tree to match words when you search many words.
+Use the KMP when search single word.
 
 # How To Use
 ```
