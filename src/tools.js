@@ -1,27 +1,51 @@
 "use strict";
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.intersectionLength = exports.createLongSuffix = exports.createLongPrefix = exports.findFromTopNode = exports.buildSearchTree = void 0;
-/*const buildFailPointer = (searchWordTree: SearchTreeNode): void => {
-    const queue: SearchTreeNode[] = []
-    queue.push(...searchWordTree.children.values())
+exports.intersectionLength = exports.createLongSuffix = exports.createLongPrefix = exports.buildSearchTree = void 0;
+var buildFailPointer = function (searchWordTree) {
+    var _a;
+    var queue = [];
+    queue.push.apply(queue, __spreadArray([], __read(searchWordTree.children.values())));
     while (queue.length !== 0) {
-        const node = queue.shift() as SearchTreeNode
-        const nodeName = node.name as string
-        const nodeStr = node.str as string
-        queue.push(...node.children.values())
-        if (nodeStr?.length === 1) {
-            node.failPointer = searchWordTree
-        } else {
-            const parentNodeFailPointer = node.parent?.failPointer
-            const parentNodeFailPointerChildren = parentNodeFailPointer?.children as Map<string, SearchTreeNode>
+        var node = queue.shift();
+        var nodeName = node.name;
+        var nodeStr = node.str;
+        queue.push.apply(queue, __spreadArray([], __read(node.children.values())));
+        if ((nodeStr === null || nodeStr === void 0 ? void 0 : nodeStr.length) === 1) {
+            node.failPointer = searchWordTree;
+        }
+        else {
+            var parentNodeFailPointer = (_a = node.parent) === null || _a === void 0 ? void 0 : _a.failPointer;
+            var parentNodeFailPointerChildren = parentNodeFailPointer === null || parentNodeFailPointer === void 0 ? void 0 : parentNodeFailPointer.children;
             if (parentNodeFailPointerChildren.has(nodeName)) {
-                node.failPointer = parentNodeFailPointerChildren.get(nodeName)
-            } else {
-                node.failPointer = parentNodeFailPointer
+                node.failPointer = parentNodeFailPointerChildren.get(nodeName);
+            }
+            else {
+                node.failPointer = parentNodeFailPointer;
             }
         }
     }
-}*/
+};
 var buildSearchTree = function (searchArray) {
     var tree = {
         children: new Map(),
@@ -49,35 +73,10 @@ var buildSearchTree = function (searchArray) {
             }
         });
     });
-    // buildFailPointer(tree)
+    buildFailPointer(tree);
     return tree;
 };
 exports.buildSearchTree = buildSearchTree;
-var findFromTopNode = function (contents, tree, position, searchResult, formatter) {
-    var createMatchInfo = function (word, start, end) { return ({ word: word, start: start, end: end }); };
-    var node = tree;
-    for (var cursor = position; cursor < contents.length; cursor++) {
-        var char = contents[cursor];
-        var nodeChildren = node.children;
-        if (nodeChildren.has(char)) {
-            node = nodeChildren.get(char);
-            // @ts-ignore
-            if (node.isEnd) {
-                if (formatter) {
-                    formatter(searchResult, node.str, position, cursor);
-                }
-                else {
-                    searchResult.push(createMatchInfo(node.str, position, cursor));
-                }
-            }
-        }
-        else {
-            // node = node.failPointer as SearchTreeNode
-            break;
-        }
-    }
-};
-exports.findFromTopNode = findFromTopNode;
 var createLongPrefix = function (str) {
     var prefixCollection = [];
     var length = str.length;

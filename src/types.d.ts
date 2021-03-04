@@ -6,16 +6,12 @@ export interface SearchTreeNode {
     failPointer?: SearchTreeNode;
     parent?: SearchTreeNode;
 }
-export interface SearchWordTree {
-    str: string;
-    children: Map<string, SearchTreeNode>;
-}
 export interface SearchResult {
     word?: string;
     start?: number;
     end?: number;
 }
-export declare type Formatter = (result: SearchResult[], word: string, start: number, end: number) => void;
+export declare type Formatter = (result: unknown[], word: string, start: number, end: number) => void;
 export interface Search {
-    search(content: string, formatter?: Formatter): SearchResult[];
+    search(content: string, formatter?: Formatter): unknown[] | SearchResult[];
 }

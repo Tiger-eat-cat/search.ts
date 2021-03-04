@@ -1,6 +1,6 @@
-import { SearchTreeNode, SearchResult, Formatter } from './types'
+import { SearchTreeNode } from './types'
 
-/*const buildFailPointer = (searchWordTree: SearchTreeNode): void => {
+const buildFailPointer = (searchWordTree: SearchTreeNode): void => {
     const queue: SearchTreeNode[] = []
     queue.push(...searchWordTree.children.values())
     while (queue.length !== 0) {
@@ -20,7 +20,7 @@ import { SearchTreeNode, SearchResult, Formatter } from './types'
             }
         }
     }
-}*/
+}
 
 export const buildSearchTree = (searchArray: string[]): SearchTreeNode => {
     const tree: SearchTreeNode = {
@@ -48,33 +48,9 @@ export const buildSearchTree = (searchArray: string[]): SearchTreeNode => {
             }
         })
     })
-    // buildFailPointer(tree)
+    buildFailPointer(tree)
     return tree
 }
-
-export const findFromTopNode = (contents: string[], tree: SearchTreeNode, position: number, searchResult: SearchResult[], formatter?: Formatter): void => {
-    const createMatchInfo = (word: string, start: number, end: number): SearchResult => ({ word, start, end })
-    let node: SearchTreeNode = tree
-    for (let cursor = position; cursor < contents.length; cursor++) {
-        const char: string = contents[cursor]
-        const nodeChildren: Map<string, SearchTreeNode> = node.children
-        if (nodeChildren.has(char)) {
-            node = nodeChildren.get(char) as SearchTreeNode
-            // @ts-ignore
-            if (node.isEnd) {
-                if (formatter) {
-                    formatter(searchResult, node.str, position, cursor)
-                } else {
-                    searchResult.push(createMatchInfo(node.str, position, cursor))
-                }
-            }
-        } else {
-            // node = node.failPointer as SearchTreeNode
-            break
-        }
-    }
-}
-
 
 export const createLongPrefix = (str: string): string[] => {
     const prefixCollection: string[] = []
