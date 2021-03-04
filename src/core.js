@@ -7,11 +7,30 @@ var buildSearch = function (search) {
         var searchTree_1 = tools_1.buildSearchTree(search);
         return {
             search: function (content, formatter) {
+                var createMatchInfo = function (word, start, end) { return ({ word: word, start: start, end: end }); };
                 var searchResult = [];
                 var contentList = content.split('');
-                contentList.forEach(function (char, index) {
-                    tools_1.findFromTopNode(contentList, searchTree_1, index, searchResult, formatter);
-                });
+                var node = searchTree_1;
+                for (var i = 0; i < contentList.length; i++) {
+                    var char = content[i];
+                    var nodeChildren = node.children;
+                    if (nodeChildren.has(char)) {
+                        node = nodeChildren.get(char);
+                        while (node.isEnd) {
+                            var start = (i + 1) - node.str.length;
+                            if (formatter) {
+                                formatter(searchResult, node.str, start, i);
+                            }
+                            else {
+                                searchResult.push(createMatchInfo(node.str, start, i));
+                            }
+                            node = node.failPointer;
+                        }
+                    }
+                    else {
+                        node = (node.failPointer || searchTree_1);
+                    }
+                }
                 return searchResult;
             }
         };

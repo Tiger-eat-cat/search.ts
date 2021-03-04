@@ -1,16 +1,33 @@
-import { buildSearchTree, createLongPrefix, createLongSuffix, findFromTopNode, intersectionLength } from './tools'
-import { Search, Formatter } from './types'
+import { buildSearchTree, createLongPrefix, createLongSuffix, intersectionLength } from './tools'
+import { Search, Formatter, SearchTreeNode } from './types'
 
 export const buildSearch = (search: string[] | string): Search => {
     if (search instanceof Array) {
         const searchTree = buildSearchTree(search)
         return {
             search: (content: string, formatter?: Formatter): unknown[] => {
+                const createMatchInfo = (word: string, start: number, end: number): unknown => ({ word, start, end })
                 const searchResult: unknown[] = []
                 const contentList = content.split('')
-                contentList.forEach((char, index) => {
-                    findFromTopNode(contentList, searchTree, index, searchResult, formatter)
-                })
+                let node: SearchTreeNode = searchTree
+                for (let i = 0; i < contentList.length; i++) {
+                    const char: string = content[i]
+                    const nodeChildren: Map<string, SearchTreeNode> = node.children
+                    if (nodeChildren.has(char)) {
+                        node = nodeChildren.get(char) as SearchTreeNode
+                        while (node.isEnd) {
+                            const start = (i + 1) - node.str.length
+                            if (formatter) {
+                                formatter(searchResult, node.str, start, i)
+                            } else {
+                                searchResult.push(createMatchInfo(node.str, start, i))
+                            }
+                            node = node.failPointer as SearchTreeNode
+                        }
+                    } else {
+                        node = (node.failPointer || searchTree) as SearchTreeNode
+                    }
+                }
                 return searchResult
             }
         }
