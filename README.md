@@ -1,6 +1,6 @@
 # search.ts
 Searches for the target string in the string.
-It builds a search-words-tree to match words when you search many words.
+Use the Aho-Corasick automaton when search many words.
 Use the KMP when search single word.
 
 # How To Use
@@ -63,3 +63,6 @@ console.log(searcher.search(article))
         search(content: string, formatter?: Formatter): SearchResult[]
     }
 
+#Question
+If you pass a too large string array. It may cause spend lots of time to build fail pointer when map words-tree
+(I don't know why). In this case you can install v1.3.1 that it will spend more time to search but retrenches build time.

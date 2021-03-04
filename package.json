@@ -1,6 +1,6 @@
 {
     "name": "search.ts",
-    "version": "1.3.2-beta.1",
+    "version": "1.3.2",
     "description": "Searches for the target string in the string",
     "main": "index.ts",
     "scripts": {
@@ -20,7 +20,8 @@
         "search-ts",
         "search.ts",
         "searchts",
-        "kmp"
+        "kmp",
+        "Aho-Corasick automaton"
     ],
     "author": "Tiger-eat-cat",
     "license": "ISC",
