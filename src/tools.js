@@ -26,8 +26,10 @@ var buildFailPointer = function (searchWordTree) {
     var _a;
     var queue = [];
     queue.push.apply(queue, __spreadArray([], __read(searchWordTree.children.values())));
-    while (queue.length !== 0) {
-        var node = queue.shift();
+    var length = queue.length;
+    var start = 0;
+    while (start < length) {
+        var node = queue[start];
         var nodeName = node.name;
         var nodeStr = node.str;
         queue.push.apply(queue, __spreadArray([], __read(node.children.values())));
@@ -37,16 +39,20 @@ var buildFailPointer = function (searchWordTree) {
         else {
             var parentNodeFailPointer = (_a = node.parent) === null || _a === void 0 ? void 0 : _a.failPointer;
             var parentNodeFailPointerChildren = parentNodeFailPointer === null || parentNodeFailPointer === void 0 ? void 0 : parentNodeFailPointer.children;
-            if (parentNodeFailPointerChildren.has(nodeName)) {
-                node.failPointer = parentNodeFailPointerChildren.get(nodeName);
+            var sameNameNode = parentNodeFailPointerChildren.get(nodeName);
+            if (sameNameNode) {
+                node.failPointer = sameNameNode;
             }
             else {
                 node.failPointer = parentNodeFailPointer;
             }
         }
+        length = queue.length;
+        start += 1;
     }
 };
 var buildSearchTree = function (searchArray) {
+    console.time('build search tree');
     var tree = {
         children: new Map(),
         str: '',
@@ -73,7 +79,10 @@ var buildSearchTree = function (searchArray) {
             }
         });
     });
+    console.timeEnd('build search tree');
+    console.time('build fail pointer');
     buildFailPointer(tree);
+    console.timeEnd('build fail pointer');
     return tree;
 };
 exports.buildSearchTree = buildSearchTree;

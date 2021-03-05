@@ -3,8 +3,10 @@ import { SearchTreeNode } from './types'
 const buildFailPointer = (searchWordTree: SearchTreeNode): void => {
     const queue: SearchTreeNode[] = []
     queue.push(...searchWordTree.children.values())
-    while (queue.length !== 0) {
-        const node = queue.shift() as SearchTreeNode
+    let length = queue.length
+    let start = 0
+    while (start < length) {
+        const node = queue[start] as SearchTreeNode
         const nodeName = node.name as string
         const nodeStr = node.str as string
         queue.push(...node.children.values())
@@ -13,16 +15,20 @@ const buildFailPointer = (searchWordTree: SearchTreeNode): void => {
         } else {
             const parentNodeFailPointer = node.parent?.failPointer
             const parentNodeFailPointerChildren = parentNodeFailPointer?.children as Map<string, SearchTreeNode>
-            if (parentNodeFailPointerChildren.has(nodeName)) {
-                node.failPointer = parentNodeFailPointerChildren.get(nodeName)
+            const sameNameNode = parentNodeFailPointerChildren.get(nodeName)
+            if (sameNameNode) {
+                node.failPointer = sameNameNode
             } else {
                 node.failPointer = parentNodeFailPointer
             }
         }
+        length = queue.length
+        start += 1
     }
 }
 
 export const buildSearchTree = (searchArray: string[]): SearchTreeNode => {
+    console.time('build search tree')
     const tree: SearchTreeNode = {
         children: new Map(),
         str: '',
@@ -48,7 +54,10 @@ export const buildSearchTree = (searchArray: string[]): SearchTreeNode => {
             }
         })
     })
+    console.timeEnd('build search tree')
+    console.time('build fail pointer')
     buildFailPointer(tree)
+    console.timeEnd('build fail pointer')
     return tree
 }
 
