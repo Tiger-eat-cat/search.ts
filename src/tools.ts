@@ -28,7 +28,6 @@ const buildFailPointer = (searchWordTree: SearchTreeNode): void => {
 }
 
 export const buildSearchTree = (searchArray: string[]): SearchTreeNode => {
-    console.time('build search tree')
     const tree: SearchTreeNode = {
         children: new Map(),
         str: '',
@@ -54,10 +53,7 @@ export const buildSearchTree = (searchArray: string[]): SearchTreeNode => {
             }
         })
     })
-    console.timeEnd('build search tree')
-    console.time('build fail pointer')
     buildFailPointer(tree)
-    console.timeEnd('build fail pointer')
     return tree
 }
 
