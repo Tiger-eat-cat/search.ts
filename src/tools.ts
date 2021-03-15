@@ -3,8 +3,10 @@ import { SearchTreeNode } from './types'
 const buildFailPointer = (searchWordTree: SearchTreeNode): void => {
     const queue: SearchTreeNode[] = []
     queue.push(...searchWordTree.children.values())
-    while (queue.length !== 0) {
-        const node = queue.shift() as SearchTreeNode
+    let length = queue.length
+    let start = 0
+    while (start < length) {
+        const node = queue[start] as SearchTreeNode
         const nodeName = node.name as string
         const nodeStr = node.str as string
         queue.push(...node.children.values())
@@ -13,12 +15,15 @@ const buildFailPointer = (searchWordTree: SearchTreeNode): void => {
         } else {
             const parentNodeFailPointer = node.parent?.failPointer
             const parentNodeFailPointerChildren = parentNodeFailPointer?.children as Map<string, SearchTreeNode>
-            if (parentNodeFailPointerChildren.has(nodeName)) {
-                node.failPointer = parentNodeFailPointerChildren.get(nodeName)
+            const sameNameNode = parentNodeFailPointerChildren.get(nodeName)
+            if (sameNameNode) {
+                node.failPointer = sameNameNode
             } else {
                 node.failPointer = parentNodeFailPointer
             }
         }
+        length = queue.length
+        start += 1
     }
 }
 

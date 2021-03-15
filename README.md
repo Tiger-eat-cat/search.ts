@@ -62,7 +62,3 @@ console.log(searcher.search(article))
     Search {
         search(content: string, formatter?: Formatter): SearchResult[]
     }
-
-#Question
-If you pass a too large string array. It may cause spend lots of time to build fail pointer when map words-tree
-(I don't know why). In this case you can install v1.3.1 that it will spend more time to search but retrenches build time.
