@@ -16,11 +16,12 @@ export const buildSearch = (search: string[] | string): Search => {
                     if (nodeChildren.has(char)) {
                         node = nodeChildren.get(char) as SearchTreeNode
                         while (node.isEnd) {
-                            const start = (i + 1) - node.str.length
+                            const start = (i + 1) - node.length
+                            const name: string = content.slice(start, i + 1)
                             if (formatter) {
-                                formatter(searchResult, node.str, start, i)
+                                formatter(searchResult, name, start, i)
                             } else {
-                                searchResult.push(createMatchInfo(node.str, start, i))
+                                searchResult.push(createMatchInfo(name, start, i))
                             }
                             node = node.failPointer as SearchTreeNode
                         }

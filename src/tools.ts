@@ -8,9 +8,9 @@ const buildFailPointer = (searchWordTree: SearchTreeNode): void => {
     while (start < length) {
         const node = queue[start] as SearchTreeNode
         const nodeName = node.name as string
-        const nodeStr = node.str as string
+        const nodeStrLength = node.length
         queue.push(...node.children.values())
-        if (nodeStr?.length === 1) {
+        if (nodeStrLength === 1) {
             node.failPointer = searchWordTree
         } else {
             const parentNodeFailPointer = node.parent?.failPointer
@@ -30,12 +30,12 @@ const buildFailPointer = (searchWordTree: SearchTreeNode): void => {
 export const buildSearchTree = (searchArray: string[]): SearchTreeNode => {
     const tree: SearchTreeNode = {
         children: new Map(),
-        str: '',
+        length: 0,
     }
-    const createNode = (isEnd: boolean, name: string, prefix: string, parent: SearchTreeNode): SearchTreeNode => ({
+    const createNode = (isEnd: boolean, name: string, length: number, parent: SearchTreeNode): SearchTreeNode => ({
         children: new Map(),
         name,
-        str: prefix + name,
+        length,
         isEnd,
         parent,
     })
@@ -47,7 +47,7 @@ export const buildSearchTree = (searchArray: string[]): SearchTreeNode => {
                 node = node.children.get(char) as SearchTreeNode
             } else {
                 const isEnd: boolean = index === word.length - 1
-                const newNode: SearchTreeNode = createNode(isEnd, char, node.str, node)
+                const newNode: SearchTreeNode = createNode(isEnd, char, index + 1, node)
                 node.children.set(char, newNode)
                 node = node.children.get(char) as SearchTreeNode
             }
