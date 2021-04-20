@@ -2,9 +2,9 @@ export interface SearchTreeNode {
     isEnd?: boolean,
     name?: string,
     children: Map<string, SearchTreeNode>,
-    str: string,
     failPointer?: SearchTreeNode,
     parent?: SearchTreeNode
+    length: number,
 }
 
 export interface SearchResult {
