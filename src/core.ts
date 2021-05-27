@@ -1,5 +1,5 @@
 import { buildSearchTree, createLongPrefix, createLongSuffix, intersectionLength } from './tools'
-import { Search, Formatter, SearchTreeNode } from './types'
+import { Search, Formatter, SearchTreeNode, Describe } from './types'
 
 export const buildSearch = (search: string[] | string): Search => {
     if (search instanceof Array) {
@@ -80,4 +80,50 @@ export const buildKMPSearch = (search: string): Search => {
             return result
         }
     }
+}
+
+export const treeDepthFirstSearch = <T extends { [propName: string]: any }>(tree: T, describe: Describe, key: string = 'id', childKey: string = 'children'): T | null => {
+    const stack: T[] = [tree]
+    const visited: Map<unknown, unknown> = new Map()
+    while (stack.length !== 0) {
+        const lastIndex: number = stack.length - 1
+        const endItem: T = stack[lastIndex]
+        const children: T[] = endItem[childKey]
+        const notVisitedChild: T | undefined = children?.find(node => !visited.has(node[key]))
+        if (notVisitedChild) {
+            const childKey = notVisitedChild[key]
+            if (describe(notVisitedChild)) {
+                return notVisitedChild
+            } else {
+                visited.set(childKey, childKey)
+                stack.push(notVisitedChild)
+            }
+        } else {
+            stack.pop()
+        }
+    }
+    return null
+}
+
+export const treeBreadthFirstSearch = <T extends { [propName: string]: any }>(tree: T, describe: Describe, key: string = 'id', childKey: string = 'children'): T | null => {
+    const stack: T[] = [tree]
+    const visited: Map<unknown, unknown> = new Map()
+    let index: number = 0
+    while (stack.length !== index) {
+        const firstItem: T = stack[index]
+        const children: T[] = firstItem[childKey]
+        const notVisitedChild: T | undefined = children?.find(node => !visited.has(node[key]))
+        if (notVisitedChild) {
+            const childKey = notVisitedChild[key]
+            if (describe(notVisitedChild)) {
+                return notVisitedChild
+            } else {
+                visited.set(childKey, childKey)
+                stack.push(notVisitedChild)
+            }
+        } else {
+            index++
+        }
+    }
+    return null
 }
