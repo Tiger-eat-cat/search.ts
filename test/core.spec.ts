@@ -31,19 +31,42 @@ interface TestTreeNode {
 describe('dfs test', () => {
     it('should return target node use custom key', () => {
         const tree: TestTreeNode = {
-            key: 123,
-            child: [{ key: 345 }, { key: 334, child: [{ key: 221 }, { key: 232 }] }]
+            key: 1,
+            child: [{ key: 2 }, { key: 3, child: [{ key: 4 }, { key: 5 }] }]
         }
-        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.key === 221, 'key', 'child')?.key).toBe(221)
-        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.key === 333, 'key', 'child')).toBeNull()
+        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.key === 5, 'child')?.key).toBe(5)
+        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.key === 333, 'child')).toBeNull()
     })
     it('should return target node use default key', () => {
         const tree: TestTreeNode = {
-            id: 123,
-            children: [{ id: 345 }, { id: 334, children: [{ id: 221 }, { id: 232 }] }]
+            id: 1,
+            children: [{ id: 2 }, { id: 3, children: [{ id: 4 }, { id: 5 }] }]
         }
-        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.id === 221)?.id).toBe(221)
-        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.id === 333)).toBeNull()
+        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.id === 4)?.id).toBe(4)
+        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.id === 6)).toBeNull()
+    })
+    it('should return target node when use tree array', () => {
+        const tree: TestTreeNode = [
+            {
+                id: 1,
+                children: [{ id: 2 }, { id: 3, children: [{ id: 4 }, { id: 5 }] }]
+            },
+            {
+                id: 6,
+                children: [{ id: 7 }, { id: 8, children: [{ id: 9 }, { id: 10 }] }]
+            },
+        ]
+        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.id === 1)?.id).toBe(1)
+        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.id === 2)?.id).toBe(2)
+        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.id === 3)?.id).toBe(3)
+        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.id === 4)?.id).toBe(4)
+        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.id === 5)?.id).toBe(5)
+        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.id === 6)?.id).toBe(6)
+        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.id === 7)?.id).toBe(7)
+        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.id === 8)?.id).toBe(8)
+        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.id === 9)?.id).toBe(9)
+        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.id === 10)?.id).toBe(10)
+        expect(treeDepthFirstSearch(tree, (node: TestTreeNode) => node.id === 11)).toBeNull()
     })
 })
 
@@ -51,18 +74,46 @@ describe('dfs test', () => {
 describe('bfs test', () => {
     it('should return target node use custom key', () => {
         const tree: TestTreeNode = {
-            key: 123,
-            child: [{ key: 345 }, { key: 334, child: [{ key: 221 }, { key: 232 }] }]
+            key: 1,
+            child: [{ key: 2 }, { key: 3, child: [{ key: 4 }, { key: 5 }] }]
         }
-        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.key === 232, 'key', 'child')?.key).toBe(232)
-        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.key === 333, 'key', 'child')).toBeNull()
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.key === 1, 'child')?.key).toBe(1)
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.key === 3, 'child')?.key).toBe(3)
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.key === 5, 'child')?.key).toBe(5)
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.key === 6, 'child')).toBeNull()
     })
     it('should return target node use default key', () => {
         const tree: TestTreeNode = {
-            id: 123,
-            children: [{ id: 345 }, { id: 334, children: [{ id: 221 }, { id: 232 }] }]
+            id: 1,
+            children: [{ id: 2 }, { id: 3, children: [{ id: 4 }, { id: 5 }] }]
         }
-        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.id === 221)?.id).toBe(221)
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.id === 1)?.id).toBe(1)
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.id === 2)?.id).toBe(2)
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.id === 3)?.id).toBe(3)
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.id === 5)?.id).toBe(5)
         expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.id === 333)).toBeNull()
+    })
+    it('should return target node when use tree array', () => {
+        const tree: TestTreeNode = [
+            {
+                id: 1,
+                children: [{ id: 3 }, { id: 5, children: [{ id: 7 }, { id: 8 }] }]
+            },
+            {
+                id: 2,
+                children: [{ id: 4 }, { id: 6, children: [{ id: 9 }, { id: 10 }] }]
+            },
+        ]
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.id === 1)?.id).toBe(1)
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.id === 2)?.id).toBe(2)
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.id === 3)?.id).toBe(3)
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.id === 4)?.id).toBe(4)
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.id === 5)?.id).toBe(5)
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.id === 6)?.id).toBe(6)
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.id === 7)?.id).toBe(7)
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.id === 8)?.id).toBe(8)
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.id === 9)?.id).toBe(9)
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.id === 10)?.id).toBe(10)
+        expect(treeBreadthFirstSearch(tree, (node: TestTreeNode) => node.id === 11)).toBeNull()
     })
 })

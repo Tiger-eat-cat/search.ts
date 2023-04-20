@@ -82,48 +82,36 @@ export const buildKMPSearch = (search: string): Search => {
     }
 }
 
-export const treeDepthFirstSearch = <T extends { [propName: string]: any }>(tree: T, describe: Describe, key: string = 'id', childKey: string = 'children'): T | null => {
-    const stack: T[] = [tree]
-    const visited: Map<unknown, unknown> = new Map()
-    while (stack.length !== 0) {
-        const lastIndex: number = stack.length - 1
-        const endItem: T = stack[lastIndex]
-        const children: T[] = endItem[childKey]
-        const notVisitedChild: T | undefined = children?.find(node => !visited.has(node[key]))
-        if (notVisitedChild) {
-            const childKey = notVisitedChild[key]
-            if (describe(notVisitedChild)) {
-                return notVisitedChild
-            } else {
-                visited.set(childKey, childKey)
-                stack.push(notVisitedChild)
-            }
-        } else {
-            stack.pop()
+export const treeDepthFirstSearch = <T extends { [propName: string]: any }>(tree: T, describe: Describe, childKey: string = 'children'): T | null => {
+    const stack: T[] = Array.isArray(tree) ? [...tree.reverse()] : [tree]
+    while (stack.length > 0) {
+        const node = stack.pop() as T
+        const children: T[] = node[childKey]
+        if (describe(node)) {
+            return node
+        }
+        const isArray = Array.isArray(children)
+        if (isArray && children.length > 0) {
+            stack.push(...(children.reverse()))
         }
     }
     return null
 }
 
-export const treeBreadthFirstSearch = <T extends { [propName: string]: any }>(tree: T, describe: Describe, key: string = 'id', childKey: string = 'children'): T | null => {
-    const stack: T[] = [tree]
-    const visited: Map<unknown, unknown> = new Map()
+export const treeBreadthFirstSearch = <T extends { [propName: string]: any }>(tree: T, describe: Describe, childKey: string = 'children'): T | null => {
+    const stack: T[] = Array.isArray(tree) ? [...tree] : [tree]
     let index: number = 0
     while (stack.length !== index) {
-        const firstItem: T = stack[index]
-        const children: T[] = firstItem[childKey]
-        const notVisitedChild: T | undefined = children?.find(node => !visited.has(node[key]))
-        if (notVisitedChild) {
-            const childKey = notVisitedChild[key]
-            if (describe(notVisitedChild)) {
-                return notVisitedChild
-            } else {
-                visited.set(childKey, childKey)
-                stack.push(notVisitedChild)
-            }
-        } else {
-            index++
+        const node: T = stack[index]
+        const children: T[] = node[childKey]
+        if (describe(node)) {
+            return node
         }
+        const isArray = Array.isArray(children)
+        if (isArray && children.length > 0) {
+            stack.push(...children)
+        }
+        index++
     }
     return null
 }

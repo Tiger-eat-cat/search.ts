@@ -19,4 +19,6 @@ export interface Search {
     search(content: string, formatter?: Formatter): unknown[] | SearchResult[]
 }
 
-export type Describe = <T>(node: T) => boolean
+export interface Describe {
+    <T>(node: T): boolean
+}

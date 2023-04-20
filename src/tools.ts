@@ -93,3 +93,12 @@ export const intersectionLength = (arg1: string[], arg2: string[]): number => {
     }
     return result.length
 }
+
+
+export const isString = (object: any): boolean => {
+    return Object.prototype.toString.call(object) === '[object String]'
+}
+
+export const isFunction = (object: any): boolean => {
+    return Object.prototype.toString.call(object) === '[object Function]'
+}

@@ -50,16 +50,14 @@ console.log(searcher.search(article))
       - start: Matched word start index in content
       - end: Matched word end index in content
 - **treeDepthFirstSearch** (depth first search in tree)
-   - treeDepthFirstSearch<T extends { [propName: string]: any }>(tree: T, describe: Describe, key: string, childKey: string)
+   - treeDepthFirstSearch<T extends { [propName: string]: any }>(tree: T, describe: Describe, childKey: string)
       - tree: A tree-shape object which every node may has children.
       - describe: The function with every node as param with boolean return, using for find target node.
-      - key: Every node's primary key, default is 'id'.
       - childKey: Every node's children key, default is 'children'.
 - **treeBreadthFirstSearch** (breadth first search in tree)
-   - treeBreadthFirstSearch<T extends { [propName: string]: any }>(tree: T, describe: Describe, key: string, childKey: string)
+   - treeBreadthFirstSearch<T extends { [propName: string]: any }>(tree: T, describe: Describe, childKey: string)
       - tree: A tree-shape object which every node may has children.
       - describe: The function with every node as param with boolean return, using for find target node.
-      - key: Every node's primary key, default is 'id'.
       - childKey: Every node's children key, default is 'children'.
       
 ### Attribute
